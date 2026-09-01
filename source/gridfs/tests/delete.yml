@@ -188,13 +188,11 @@ tests:
     expectEvents:
       - client: *client0
         events:
-          # Setup: remove the files collection document to create orphaned chunks
           - commandStartedEvent:
               commandName: delete
               databaseName: *database0Name
               command:
                 delete: *bucket0_files_collectionName
-          # No query is run on the files collection to check that the file exists
           - commandStartedEvent:
               commandName: delete
               databaseName: *database0Name
