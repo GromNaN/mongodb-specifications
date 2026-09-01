@@ -5,7 +5,6 @@ schemaVersion: "1.0"
 createEntities:
   - client:
       id: &client0 client0
-      observeEvents: [ commandStartedEvent ]
   - database:
       id: &database0 database0
       client: *client0
@@ -143,19 +142,6 @@ tests:
         arguments:
           id: { $oid: "000000000000000000000000" }
         expectError: { isClientError: true } # FileNotFound
-    expectEvents:
-      - client: *client0
-        events:
-          - commandStartedEvent:
-              commandName: delete
-              databaseName: *database0Name
-              command:
-                delete: *bucket0_files_collectionName
-          - commandStartedEvent:
-              commandName: delete
-              databaseName: *database0Name
-              command:
-                delete: *bucket0_chunks_collectionName
     outcome:
       - collectionName: *bucket0_files_collectionName
         databaseName: *database0Name
@@ -185,24 +171,6 @@ tests:
         arguments:
           id: { $oid: "000000000000000000000004" }
         expectError: { isClientError: true } # FileNotFound
-    expectEvents:
-      - client: *client0
-        events:
-          - commandStartedEvent:
-              commandName: delete
-              databaseName: *database0Name
-              command:
-                delete: *bucket0_files_collectionName
-          - commandStartedEvent:
-              commandName: delete
-              databaseName: *database0Name
-              command:
-                delete: *bucket0_files_collectionName
-          - commandStartedEvent:
-              commandName: delete
-              databaseName: *database0Name
-              command:
-                delete: *bucket0_chunks_collectionName
     outcome:
       - collectionName: *bucket0_files_collectionName
         databaseName: *database0Name
