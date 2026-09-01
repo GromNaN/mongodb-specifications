@@ -644,8 +644,12 @@ chunks for the given stored file. To minimize the window of vulnerability of rea
 of being deleted, drivers MUST first delete the files collection document for a stored file, then delete its associated
 chunks.
 
-If there is no such file listed in the files collection, drivers MUST raise an error. Drivers MAY attempt to delete any
-orphaned chunks with files_id equal to id before raising the error.
+Drivers MUST always delete the chunks with files_id equal to id, even when no files collection document was deleted.
+This ensures that orphaned chunks are removed.
+
+Drivers MUST use the number of deleted documents reported by the delete command on the files collection to determine
+whether the stored file existed. Drivers MUST NOT run a separate query on the files collection for that purpose. If no
+files collection document was deleted, drivers MUST raise an error after deleting the chunks.
 
 If a networking or server error occurs, drivers MUST raise an error.
 
@@ -1091,6 +1095,7 @@ system?") it is a potential area of growth for the future.
 
 ## Changelog
 
+- 2026-09-01: Require deleting orphaned chunks and using the delete result to detect a missing file
 - 2024-10-30: Add `delete_by_name` and `rename_by_name`
 - 2024-10-28: Removed deprecated fields from tests: `md5`, `contentType`, `aliases`
 - 2024-02-27: Migrated from reStructuredText to Markdown.

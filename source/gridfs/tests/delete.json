@@ -4,7 +4,10 @@
   "createEntities": [
     {
       "client": {
-        "id": "client0"
+        "id": "client0",
+        "observeEvents": [
+          "commandStartedEvent"
+        ]
       }
     },
     {
@@ -501,6 +504,31 @@
           }
         }
       ],
+      "expectEvents": [
+        {
+          "client": "client0",
+          "events": [
+            {
+              "commandStartedEvent": {
+                "commandName": "delete",
+                "databaseName": "gridfs-tests",
+                "command": {
+                  "delete": "fs.files"
+                }
+              }
+            },
+            {
+              "commandStartedEvent": {
+                "commandName": "delete",
+                "databaseName": "gridfs-tests",
+                "command": {
+                  "delete": "fs.chunks"
+                }
+              }
+            }
+          ]
+        }
+      ],
       "outcome": [
         {
           "collectionName": "fs.files",
@@ -652,6 +680,40 @@
           "expectError": {
             "isClientError": true
           }
+        }
+      ],
+      "expectEvents": [
+        {
+          "client": "client0",
+          "events": [
+            {
+              "commandStartedEvent": {
+                "commandName": "delete",
+                "databaseName": "gridfs-tests",
+                "command": {
+                  "delete": "fs.files"
+                }
+              }
+            },
+            {
+              "commandStartedEvent": {
+                "commandName": "delete",
+                "databaseName": "gridfs-tests",
+                "command": {
+                  "delete": "fs.files"
+                }
+              }
+            },
+            {
+              "commandStartedEvent": {
+                "commandName": "delete",
+                "databaseName": "gridfs-tests",
+                "command": {
+                  "delete": "fs.chunks"
+                }
+              }
+            }
+          ]
         }
       ],
       "outcome": [
